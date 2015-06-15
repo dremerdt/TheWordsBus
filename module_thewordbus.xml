@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_thewordbus" default="compile.module.thewordbus">
+  <dirname property="module.thewordbus.basedir" file="${ant.file.module_thewordbus}"/>
+  
+  <property name="module.jdk.home.thewordbus" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.thewordbus" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.thewordbus" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.thewordbus" value="-encoding UTF-8 -source 1.7 ${compiler.args}"/>
+  
+  <property name="thewordbus.output.dir" value="${module.thewordbus.basedir}/build/classes/production/TheWordBus"/>
+  <property name="thewordbus.testoutput.dir" value="${module.thewordbus.basedir}/build/classes/test/TheWordBus"/>
+  
+  <path id="thewordbus.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="thewordbus.module.production.classpath">
+    <path refid="${module.jdk.classpath.thewordbus}"/>
+  </path>
+  
+  <path id="thewordbus.runtime.production.module.classpath">
+    <pathelement location="${thewordbus.output.dir}"/>
+  </path>
+  
+  <path id="thewordbus.module.classpath">
+    <path refid="${module.jdk.classpath.thewordbus}"/>
+    <pathelement location="${thewordbus.output.dir}"/>
+  </path>
+  
+  <path id="thewordbus.runtime.module.classpath">
+    <pathelement location="${thewordbus.testoutput.dir}"/>
+    <pathelement location="${thewordbus.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.thewordbus">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.thewordbus">
+    <patternset refid="excluded.from.module.thewordbus"/>
+  </patternset>
+  
+  
+  <target name="compile.module.thewordbus" depends="compile.module.thewordbus.production,compile.module.thewordbus.tests" description="Compile module TheWordBus"/>
+  
+  <target name="compile.module.thewordbus.production" depends="register.custom.compilers" description="Compile module TheWordBus; production classes"/>
+  
+  <target name="compile.module.thewordbus.tests" depends="register.custom.compilers,compile.module.thewordbus.production" description="compile module TheWordBus; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.thewordbus" description="cleanup module">
+    <delete dir="${thewordbus.output.dir}"/>
+    <delete dir="${thewordbus.testoutput.dir}"/>
+  </target>
+</project>
